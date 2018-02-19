@@ -1,0 +1,33 @@
+header{
+    margin: 1rem;
+    border-bottom: black solid 2px;
+}
+
+#shop{
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#checkout {
+    display: none;
+    padding-top: 2rem;
+}
+
+#shoppa, #kassa {
+    background-color: grey;
+}
+
+#shoppa{
+    background-color: yellow;
+}
+
+form{
+    background-color: lightyellow;
+    margin-left: 5rem;
+}
+
+form p{
+    color: red;
+}
