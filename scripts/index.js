@@ -153,7 +153,7 @@ function add_to_cart(id){
     } else {
         cartObject[id] = 1;
     }
-    console.log("DATAVALUE", id, cartObject);
+    //console.log("DATAVALUE", id, cartObject);
     displayBasket();
 }
 
@@ -183,8 +183,6 @@ function displayBasket() {
             }
         }
         if (qty) {
-
-
             basket.innerHTML += `                                                                                                             
             <li><h5>${product.name}</h5></li>                                                                                                                
             <li>${product.price}:- </li><button class="decrease" data-value="${product.id}">-</button> <input type="text" value="${cartObject[key]}" class="bagged">
@@ -210,7 +208,7 @@ function displayBasket() {
         minusBtns[i].addEventListener('click', function (e) {
             remove_from_cart(this.getAttribute("data-value"));
             // console.log('Target is: ' + e.target.getAttribute("data-value"))
-            console.log('CLICKED ON MINUS ' + this.getAttribute("data-value"));
+            //console.log('CLICKED ON MINUS ' + this.getAttribute("data-value"));
             // remove_from_cart( this.getAttribute("data-value") );
 
 
@@ -220,10 +218,8 @@ function displayBasket() {
          plusBtns[i].addEventListener('click', function (e) {
              add_to_cart(this.getAttribute("data-value"));
              // console.log('Target is: ' + e.target.getAttribute("data-value"))
-             console.log('CLICKED ON MINUS ' + this.getAttribute("data-value"));
+             //console.log('CLICKED ON PLUS ' + this.getAttribute("data-value"));
              // remove_from_cart( this.getAttribute("data-value") );
-
-
          });
      }
 
@@ -235,41 +231,8 @@ function remove_from_cart(id){
             cartObject[id]--;
     }
     displayBasket();
-        console.log("DATAVALUE", id, cartObject);
-
-
+        //console.log("DATAVALUE", id, cartObject);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
