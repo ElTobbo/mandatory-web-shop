@@ -59,6 +59,8 @@ typings/
 
 .idea/
 
+.DS_Store
+
 .fire.html
 
 .fire.js
