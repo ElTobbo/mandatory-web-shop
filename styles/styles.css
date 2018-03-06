@@ -3,6 +3,13 @@ header{
     border-bottom: black solid 2px;
 }
 
+.mapShop{
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #shop{
     padding-top: 1rem;
     display: flex;

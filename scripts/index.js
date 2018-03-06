@@ -1,3 +1,5 @@
+$('#detail').hide();
+
 //Array över produkter
 
 var products = [
@@ -10,6 +12,7 @@ var products = [
     { id: 7, url: "http://cee-enterprises.com/2222-thickbox_default/ufc-banana-sauce-small-hot.jpg", name: "UFC Hot & Spicy", price: 35, description: "Originalet i en hetare variant. För dig som vill kittla smaklökarna lite extra.", qty: 12, bag: 0 }
 ];
 
+
 /*
  //Mappar över arrayen och plockar ut
  //det som specas för publicering
@@ -21,12 +24,14 @@ let shopItem = products.map(function(product){ return `
 `});
 */
 //Samma som:
-let shopItem = products.map(product=> `   
-    <img src="${product.url}">            
-    <br><h3>${product.name}</h3>
+let shopItem = products.map(product=> `
+    <div class="mapShop" data-value="${product.id}">   
+    <img src="${product.url}"><br>
+    <h3 class="zoom">${product.name}</h3>
     ${product.description} <br>
     ${product.price}:-  <button class="buy" data-value="${product.id}">KÖP</button>
      <hr>
+     </div>
 `);
 
 let shopItems = shopItem.join(" ");                     //Plockar bort kommatecken, oklart varför det inte funkar direkt på shopItem
@@ -86,11 +91,11 @@ function validateForm() {
 let kassa = document.getElementById("kassa").addEventListener("click", betala);     //För att toggla mellan shop och checkout
 
 function betala(){
-     this.style.backgroundColor = "yellow";
-     document.getElementById("shop").style.display = "none";
-     document.getElementById("checkout").style.display = "flex";
-     document.getElementById("shoppa").style.backgroundColor = "grey";
-
+    this.style.backgroundColor = "yellow";
+    document.getElementById("shop").style.display = "none";
+    document.getElementById("checkout").style.display = "flex";
+    document.getElementById("shoppa").style.backgroundColor = "grey";
+    document.getElementById("detail").style.display = "none";
 }
 
 let shoppa = document.getElementById("shoppa").addEventListener("click", browse);
@@ -100,30 +105,31 @@ function browse(){
     document.getElementById("shop").style.display = "flex";
     document.getElementById("checkout").style.display = "none";
     document.getElementById("kassa").style.backgroundColor = "grey";
+    $('#detail').hide();
 }
 
 //Varukorg
-   /*
+/*
 var purchase = [
-    { name: "Baron", price: 55, qty: 0 },
-    { name: "Del Monte", price: 42, qty: 0 },
-    { name: "Jufran",  price: 40, qty: 0 },
-    { name: "Sinclair", price: 72, qty: 0 },
-    { name: "Viking", price: 45, qty: 0 },
-    { name: "UFC", price: 35, qty: 0  },
-    { name: "UFC Hot & Spicy", price: 35, qty: 0 }
+ { name: "Baron", price: 55, qty: 0 },
+ { name: "Del Monte", price: 42, qty: 0 },
+ { name: "Jufran",  price: 40, qty: 0 },
+ { name: "Sinclair", price: 72, qty: 0 },
+ { name: "Viking", price: 45, qty: 0 },
+ { name: "UFC", price: 35, qty: 0  },
+ { name: "UFC Hot & Spicy", price: 35, qty: 0 }
 ];
- */
+*/
 
 
 //console.log("Basket", basket);
-   /*
+/*
 document.getElementsByClassName('buy')[0].addEventListener("click", function(){
-    var basket = products.map(basket=> `<h6>${basket.name}</h6> ${basket.qty =+ 1} st ${basket.price * basket.qty}:- `);
+ var basket = products.map(basket=> `<h6>${basket.name}</h6> ${basket.qty =+ 1} st ${basket.price * basket.qty}:- `);
 }
 );
-    console.log(basket);
-    */
+ console.log(basket);
+ */
 
 let cartObject = {
 
@@ -141,8 +147,8 @@ var buyButtons = document.getElementsByClassName('buy');
 for ( var i = 0; i < buyButtons.length; i++ ) {
     buyButtons[i].addEventListener('click', function() {
 
-    	// Vid tryck på en knapp triggas funktionen add_to_cart som får ett värde från data-value-attributet
-    	add_to_cart( this.getAttribute("data-value") );
+        // Vid tryck på en knapp triggas funktionen add_to_cart som får ett värde från data-value-attributet
+        add_to_cart( this.getAttribute("data-value") );
 
     });
 }
@@ -156,9 +162,6 @@ function add_to_cart(id){
     //console.log("DATAVALUE", id, cartObject);
     displayBasket();
 }
-
-
-
 
 
 /*
@@ -185,8 +188,11 @@ function displayBasket() {
         if (qty) {
             basket.innerHTML += `                                                                                                             
             <li><h5>${product.name}</h5></li>                                                                                                                
-            <li>${product.price}:- </li><button class="decrease" data-value="${product.id}">-</button> <input type="text" value="${cartObject[key]}" class="bagged">
-            <button class="increase" data-value="${product.id}">+</button>  <li>${product.price * cartObject[key]}</li>
+            <li>${product.price}:- </li>
+            <button class="decrease" data-value="${product.id}">-</button> 
+            <input type="text" value="${cartObject[key]}" class="bagged">
+            <button class="increase" data-value="${product.id}">+</button>  
+            <li>${product.price * cartObject[key]}</li>
              <hr>                                                                             
         `;
         }
@@ -198,7 +204,7 @@ function displayBasket() {
     /*
     for(let i=0; i < minusBtns.length; i--); {
         minusBtns[i].addEventListener("click", function(event){
-            
+
               event.target()
         });
     }
@@ -214,26 +220,85 @@ function displayBasket() {
 
         });
     }
-     for (var i = 0; i < plusBtns.length; i++) {
-         plusBtns[i].addEventListener('click', function (e) {
-             add_to_cart(this.getAttribute("data-value"));
-             // console.log('Target is: ' + e.target.getAttribute("data-value"))
-             //console.log('CLICKED ON PLUS ' + this.getAttribute("data-value"));
-             // remove_from_cart( this.getAttribute("data-value") );
-         });
-     }
+    for (var i = 0; i < plusBtns.length; i++) {
+        plusBtns[i].addEventListener('click', function (e) {
+            add_to_cart(this.getAttribute("data-value"));
+            // console.log('Target is: ' + e.target.getAttribute("data-value"))
+            //console.log('CLICKED ON PLUS ' + this.getAttribute("data-value"));
+            // remove_from_cart( this.getAttribute("data-value") );
+        });
+    }
 
+    let total = Array.from(document.getElementsByClassName("bagged"));
+    let totalItems = total.reduce(function(accumulator, node){
+        return accumulator+parseInt(node.getAttribute("value"));
+    }, 0);
+    //console.log("Totalt antal", totalItems);
+    //document.getElementById("itemCount").innerHTML = totalItems;
+    $("#itemCount").html(totalItems);
 }
+function remove_from_cart(id) {
 
-function remove_from_cart(id){
-
-    if (cartObject[id]){
-            cartObject[id]--;
+    if (cartObject[id]) {
+        cartObject[id]--;
     }
     displayBasket();
-        //console.log("DATAVALUE", id, cartObject);
+    //console.log("DATAVALUE", id, cartObject);
+}
+// -------------------------------------------------------------------------
+
+$(".zoom").on("click", (e) => {                 //eventfunktion
+    $("#shop").hide();
+    $("#detail").show();
+    const itemId = $(e.currentTarget).parent().attr("data-value");
+    console.log(itemId);
+    let parsed = parseInt(itemId);
+    let found = products.find(product => {
+        console.log(product.id, product.id === parsed)
+        return product.id === parsed
+    });
+    console.log("Found: ", found);
+    $("#produktzoom").html(`
+        <h3>${found.name}</h3><br>
+        <img src="${found.url}"><br>
+        ${found.description}<br>
+        ${found.price}:-
+        <button class="buyItem" data-value="${found.id}">KÖP</button>
+        <hr>
+        
+`)
+    $("#produktzoom .buyItem").click(function() {
+
+        add_to_cart(parseInt($(this).attr("data-value")));
+
+    })
+});
+
+
+/*
+let zoom = document.getElementsByClassName("zoom");
+
+for (var i = 0; i < zoom.length; i++) {
+    zoom[i].addEventListener('click', function (e) {
+        selectItem(this.getAttribute("data-value"));
+    });
 }
 
+function selectItem(){
+    $('#detail')
+    document.getElementById("shop").style.display = "none";
+    document.getElementById("checkout").style.display = "none";
+
+   $('#detail').html += `
+       <h5>${product.name}</h5>
+       <img src="${product.url}">
+         ${product.description}
+         ${product.price}:-
+         <hr>
+
+   `
+}
+*/
 
 
 

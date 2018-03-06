@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --->
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <title>Bananarama</title>
 
@@ -19,10 +20,31 @@
         <button id="kassa">Kassa</button>
         <!--<div class="basket"> --->
         <i class="fas fa-shopping-basket"></i>
-        <p id="itemCount"></p>
+        <span id="itemCount">0</span>
         <!-- </div> --->
     </header>
 <div id="shop"></div>
+
+ <div id="detail">
+
+    <div id="produktzoom"></div>
+     <div id="review">
+         <h3>LÄMNA DIN RECENSION</h3>
+         <label>* Användarnamn: </label><br>
+         <input type="text" id="nickName" name="nname" placeholder="Användarnamn..">
+         <br><label> * Omdöme: </label>
+         <br> <textarea  id="textareans" name="message" placeholder="Skriv ditt omdöme här..."></textarea><br>
+         <input type="text" id="myID"   value="" style="display: none">
+         <div id="stars">
+             <span data-value="1"  title='Blä'>&#9733;</span>
+             <span data-value="2"  title='Nja'>&#9733;</span>
+             <span data-value="3"  title='Bra'>&#9733;</span>
+             <span data-value="4"  title='Jajjamän!'>&#9733;</span>
+             <span data-value="5"  title='Hallelujah!'>&#9733;</span>
+         </div>
+         <input type="button" value="Skicka din recension" id="sendRev" class="reviewButtons">
+     </div>
+ </div>
 
 <div id="checkout">
     <form id="info">
@@ -55,6 +77,9 @@
 
 </div>
 
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
 <script src="../scripts/index.js"></script>
 </body>
 </html>
