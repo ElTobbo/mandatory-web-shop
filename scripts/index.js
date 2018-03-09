@@ -12,6 +12,7 @@ var products = [
     { id: 7, url: "http://cee-enterprises.com/2222-thickbox_default/ufc-banana-sauce-small-hot.jpg", name: "UFC Hot & Spicy", price: 35, description: "Originalet i en hetare variant. För dig som vill kittla smaklökarna lite extra.", qty: 12, bag: 0 }
 ];
 
+var reviews = [];
 
 /*
  //Mappar över arrayen och plockar ut
@@ -190,7 +191,7 @@ function displayBasket() {
             <li><h5>${product.name}</h5></li>                                                                                                                
             <li>${product.price}:- </li>
             <button class="decrease" data-value="${product.id}">-</button> 
-            <input type="text" value="${cartObject[key]}" class="bagged">
+            <input type="text" value="${cartObject[key]}" size="4" class="bagged">
             <button class="increase" data-value="${product.id}">+</button>  
             <li>${product.price * cartObject[key]}</li>
              <hr>                                                                             
@@ -251,13 +252,15 @@ $(".zoom").on("click", (e) => {                 //eventfunktion
     $("#shop").hide();
     $("#detail").show();
     const itemId = $(e.currentTarget).parent().attr("data-value");
-    console.log(itemId);
+    //console.log(itemId);
     let parsed = parseInt(itemId);
     let found = products.find(product => {
         console.log(product.id, product.id === parsed)
         return product.id === parsed
     });
     console.log("Found: ", found);
+
+
     $("#produktzoom").html(`
         <h3>${found.name}</h3><br>
         <img src="${found.url}"><br>
@@ -265,15 +268,57 @@ $(".zoom").on("click", (e) => {                 //eventfunktion
         ${found.price}:-
         <button class="buyItem" data-value="${found.id}">KÖP</button>
         <hr>
-        
+        <div id="review">
+         <h3>LÄMNA DIN RECENSION</h3>
+         <label>* Användarnamn: </label><br>
+         <input type="text" id="nickName" data-value="${found.id}" placeholder="Användarnamn..">
+         <br><label> * Omdöme: </label>
+         <br>
+         <textarea  id="textArea" data-value="${found.id}" rows="5" cols="25" placeholder="Skriv ditt omdöme här..."></textarea><br>
+
+         <div id="stars" data-value="${found.id}">
+             <span data-value="1"  title='Blä'>&#9733;</span>
+             <span data-value="2"  title='Nja'>&#9733;</span>
+             <span data-value="3"  title='Bra'>&#9733;</span>
+             <span data-value="4"  title='Jajjamän!'>&#9733;</span>
+             <span data-value="5"  title='Hallelujah!'>&#9733;</span>
+         </div>
+         <input type="button" value="Skicka din recension" id="sendRev" class="reviewButtons">
+        </div>
+        <div id="savedreviews" data-value="${found.id}"></div>
 `)
     $("#produktzoom .buyItem").click(function() {
-
         add_to_cart(parseInt($(this).attr("data-value")));
-
     })
+
+    $('#sendRev').on("click", (e) => {
+        let user = $('#nickName').val();
+        let word = $('#textArea').val();
+        document.getElementById("savedreviews").innerHTML += `<hr>Användare: <h4>${user} </h4>Omdöme: <p>${word}</p>`;
+        console.log(savedreviews);
+        $('#nickName').val('');
+        $('#textArea').val('');
+    });
+
 });
 
+
+
+
+
+/*
+$('.stars span').on('mouseover', function(){
+    let onStars = parseInt($(this).data('value'), 10);
+    $(this).parent().children('#stars span').each(function(e){
+        if (e < onStars) {
+            $(this).css("color", "yellow");
+        }
+        else {
+            $(this).css("color", "grey");
+        }
+    });
+});
+*/
 
 /*
 let zoom = document.getElementsByClassName("zoom");

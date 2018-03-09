@@ -3,6 +3,10 @@ header{
     border-bottom: black solid 2px;
 }
 
+ul li{
+    list-style-type: none;
+}
+
 .mapShop{
     padding-top: 1rem;
     display: flex;
@@ -38,4 +42,3 @@ form{
 form p{
     color: red;
 }
-
