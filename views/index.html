@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <title>Bananarama</title>
@@ -12,22 +13,27 @@
 </head>
 
 <body>
-    <header>
-        <h1>Bananarama</h1>
-        <h3>Sveriges ledande bananketchup-shop</h3>
-        <button id="shoppa">Shop</button>
-        <button id="kassa">Kassa</button>
-        <!--<div class="basket"> --->
-        <i class="fas fa-shopping-basket"></i>
-        <p id="itemCount"></p>
-        <!-- </div> --->
-    </header>
+<header>
+    <h1>Bananarama</h1>
+    <h3>Sveriges ledande bananketchup-shop</h3>
+    <button id="shoppa">Shop</button>
+    <button id="kassa">Kassa</button>
+    <!--<div class="basket"> -->
+    <i class="fas fa-shopping-basket"></i>
+    <span id="itemCount">0</span>
+    <hr>
+    <!-- </div> -->
+</header>
 <div id="shop"></div>
+
+<div id="detail">
+    <div id="produktzoom"></div>
+</div>
 
 <div id="checkout">
     <form id="info">
         <fieldset>
-        <legend>Yes, we have your bananas!</legend>
+            <legend>Yes, we have your bananas!</legend>
             Förnamn:<br>
             <input type="text" name="firstName"><br><p></p>
             Efternamn:<br>
@@ -35,7 +41,7 @@
             E-post:<br>
             <input type="email" name="eMail"><br><p></p>
             Telefon (frivilligt):<br>
-            <input type="text" name="lastname"><br>
+            <input type="text" name="telephone"><br><p></p>
             Gata:<br>
             <input type="text" name="street"><br><p></p>
             Postnummer:<br>
@@ -55,6 +61,9 @@
 
 </div>
 
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
 <script src="../scripts/index.js"></script>
 </body>
 </html>
