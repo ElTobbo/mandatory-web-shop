@@ -294,8 +294,18 @@ $(".zoom").on("click", (e) => {                 //eventfunktion
     $('#sendRev').on("click", (e) => {
         let user = $('#nickName').val();
         let word = $('#textArea').val();
-        document.getElementById("savedreviews").innerHTML += `<hr>Användare: <h4>${user} </h4>Omdöme: <p>${word}</p>`;
-        console.log(savedreviews);
+
+        $('#savedreviews').append(`
+            <div>
+                <p>Användare:<br>${user}</p>
+                <p>Omdöme:<br>${word}</p>
+                <hr>
+            </div>
+        `)
+
+        //document.getElementById("savedreviews").innerHTML += `<hr>Användare: <h4>${user} </h4>Omdöme: <p>${word}</p>`;
+        // console.log(savedreviews);
+
         $('#nickName').val('');
         $('#textArea').val('');
     });
@@ -303,22 +313,6 @@ $(".zoom").on("click", (e) => {                 //eventfunktion
 });
 
 
-
-
-
-/*
-$('.stars span').on('mouseover', function(){
-    let onStars = parseInt($(this).data('value'), 10);
-    $(this).parent().children('#stars span').each(function(e){
-        if (e < onStars) {
-            $(this).css("color", "yellow");
-        }
-        else {
-            $(this).css("color", "grey");
-        }
-    });
-});
-*/
 
 /*
 let zoom = document.getElementsByClassName("zoom");
