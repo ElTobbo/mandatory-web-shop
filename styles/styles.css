@@ -42,3 +42,22 @@ form{
 form p{
     color: red;
 }
+
+
+#stars span{
+    cursor: pointer;
+
+    font-size: 25px;
+}
+#stars{
+    margin-left: 10px;
+}
+
+.hover{
+    color:gold;
+}
+
+/* Selected state of the stars */
+.selected {
+    color:goldenrod;
+}

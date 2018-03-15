@@ -68,23 +68,23 @@ function validateForm() {
 
     let street = document.forms["info"]["street"].value;
     if (street == "") {
-        document.getElementsByTagName('p')[4].innerHTML = "Fältet måste vara ifyllt!";
+        document.getElementsByTagName('p')[3].innerHTML = "Fältet måste vara ifyllt!";
     } else {
-        document.getElementsByTagName('p')[4].innerHTML = "";
+        document.getElementsByTagName('p')[3].innerHTML = "";
     }
 
     let zip = document.forms["info"]["zip"].value;
     if (zip == "") {
-        document.getElementsByTagName('p')[5].innerHTML = "Fältet måste vara ifyllt!"; //Hann inte riktigt mecka med individuella krav/budskap för respektive fält...
+        document.getElementsByTagName('p')[4].innerHTML = "Fältet måste vara ifyllt!"; //Hann inte riktigt mecka med individuella krav/budskap för respektive fält...
     } else {
-        document.getElementsByTagName('p')[5].innerHTML = "";
+        document.getElementsByTagName('p')[4].innerHTML = "";
     }
 
     let city = document.forms["info"]["city"].value;
     if (city == "") {
-        document.getElementsByTagName('p')[6].innerHTML = "Fältet måste vara ifyllt!";
+        document.getElementsByTagName('p')[5].innerHTML = "Fältet måste vara ifyllt!";
     } else {
-        document.getElementsByTagName('p')[6].innerHTML = "";
+        document.getElementsByTagName('p')[5].innerHTML = "";
     }
 
 }
@@ -248,6 +248,12 @@ function remove_from_cart(id) {
 }
 // -------------------------------------------------------------------------
 
+var reviews = [];
+
+//console.log("Första logg: ", reviews);
+
+//console.log("Omdöme: ", selectReview);
+
 $(".zoom").on("click", (e) => {                 //eventfunktion
     $("#shop").hide();
     $("#detail").show();
@@ -255,11 +261,57 @@ $(".zoom").on("click", (e) => {                 //eventfunktion
     //console.log(itemId);
     let parsed = parseInt(itemId);
     let found = products.find(product => {
-        console.log(product.id, product.id === parsed)
-        return product.id === parsed
-    });
-    console.log("Found: ", found);
+        console.log("Zoom: ", product.id, product.id === parsed);
 
+        return product.id === parsed;
+
+    });
+
+
+    function selectReviews() {
+        let selectReview = reviews.filter(function(select) {
+            //console.log('hej' , select.productid, parsed);
+            return select.productid === parsed;
+            });
+        console.log("Selectfunktion:", selectReview);
+        for (let review of selectReview) {
+            $('#oldreviews').append(`
+            <div>
+                <hr>
+                <b>Användare:<br>${review.user}</b><br>
+                <b>Omdöme:<br>${review.word}</b><br>
+                <b>Betyg:<br>${review.stars}</b>
+            </div>
+        `)
+        }
+        console.log($('#oldreviews'));
+    }
+
+    //
+    // function selectReviews() {
+    //     let selectReview = reviews.filter(function(select) {
+    //         //console.log('hej' , select.productid, parsed);
+    //        return select.productid === parsed
+    //            console.log('selected test', select.productid);
+    //
+    //
+    //            console.log("Selectfunktion:", selectReview);
+    //            $('#oldreviews').attr('data-value').html(`
+    //         <div>
+    //             <hr>
+    //             <b>Användare:<br>${selectReview.user}</b><br>
+    //             <b>Omdöme:<br>${selectReview.word}</b><br>
+    //             <b>Betyg:<br>${selectReview.stars}</b>
+    //         </div>
+    //     `)
+    //
+    //     });
+    // }
+
+    console.log("Parsed: ", parsed);
+    console.log("Reviewsarrayen:", reviews);
+
+    console.log("Found: ", found);
 
     $("#produktzoom").html(`
         <h3>${found.name}</h3><br>
@@ -286,32 +338,79 @@ $(".zoom").on("click", (e) => {                 //eventfunktion
          <input type="button" value="Skicka din recension" id="sendRev" class="reviewButtons">
         </div>
         <div id="savedreviews" data-value="${found.id}"></div>
+        <div id="oldreviews" data-value="${found.id}"></div>
 `)
+    selectReviews();
+
     $("#produktzoom .buyItem").click(function() {
         add_to_cart(parseInt($(this).attr("data-value")));
     })
 
-    $('#sendRev').on("click", (e) => {
+
+    $('#stars span').on('mouseover', function(){
+        var onStars = parseInt($(this).data('value'), 10);
+        $(this).parent().children('#stars span').each(function(e){
+            if (e < onStars) {
+                $(this).addClass('hover');
+            }
+            else {
+                $(this).removeClass('hover');
+            }
+        });
+    }).on('mouseout', function(){
+        $(this).parent().children('#stars span').each(function(e){
+            $(this).removeClass('hover');
+        });
+    });
+
+//Sparar värdet på vald stjärna
+    $('#stars span').on('click', function() {
+        let onStar = parseInt($(this).data('value'), 10);
+        $('#stars').val(onStar);
+        //Sparar styling för besökarens val
+        let stars = $(this).parent().children('#stars span');
+
+        for (i = 0; i < stars.length; i++) {
+            $(stars[i]).removeClass('selected');
+        }
+
+        for (i = 0; i < onStar; i++) {
+            $(stars[i]).addClass('selected');
+        }
+    });
+
+        $('#sendRev').on("click", (e) => {
         let user = $('#nickName').val();
         let word = $('#textArea').val();
+        let stars = $('#stars').val();
 
         $('#savedreviews').append(`
             <div>
-                <p>Användare:<br>${user}</p>
-                <p>Omdöme:<br>${word}</p>
                 <hr>
+                <b>Användare:<br>${user}</b><br>
+                <b>Omdöme:<br>${word}</b><br>
+                <b>Betyg:<br>${stars}</b>
             </div>
         `)
 
+            let productid = Number($('#textArea').attr('data-value'))
+
+            reviews.push({
+            productid,
+            user,
+            word,
+            stars
+        });
+        console.log("Alla reviews: ", reviews);
         //document.getElementById("savedreviews").innerHTML += `<hr>Användare: <h4>${user} </h4>Omdöme: <p>${word}</p>`;
         // console.log(savedreviews);
 
         $('#nickName').val('');
         $('#textArea').val('');
-    });
+        $('#stars span').removeClass('selected');
+        });
 
 });
-
 
 
 /*
